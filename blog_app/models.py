@@ -17,7 +17,7 @@ class Author(TimeStampMixin):
         return self.first_name
 
 class Post(TimeStampMixin):
-    author = models.ForeignKey(to=Author, on_delete=models.CASCADE, name='author_post')
+    author = models.ForeignKey(to=Author, on_delete=models.CASCADE, related_name='author_post')
     title = models.CharField(max_length=200)
     content = models.TextField()
 
@@ -25,8 +25,8 @@ class Post(TimeStampMixin):
         return self.title
 
 class Comment(TimeStampMixin):
-    author = models.ForeignKey(to=Author, on_delete=models.CASCADE, name='author_comment')
-    post = models.ForeignKey(to=Post, on_delete=models.CASCADE, name='post_comment')
+    user_comment = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='user_comments')
+    post_comment = models.ForeignKey(to=Post, on_delete=models.CASCADE, related_name='post_comments')
     content = models.TextField()
     parent = models.ForeignKey('self', on_delete=models.CASCADE,blank=True, null=True)
 

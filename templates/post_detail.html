@@ -8,11 +8,30 @@
 </head>
 
 <body>
+    <a href="{% url 'post_list' %}"> <- back to home</a>
     <div>
         <h1>{{ post.title }}</h1>
         <p>{{ post.created_at }}</p>
         <h2>{{ post.content }}</h2>
     </div>
+    <div class="comment-box">
+        <h3>Leave a comment</h3>
+        <form action="{% url 'create_comment' post.id %}" method="post">
+            {% csrf_token %}
+            <textarea name="content" id="" placeholder="write your comment"></textarea>
+            <button type="submit">Post comment</button>
+        </form>
+    </div>
+
+    {% for comment in comments %}
+        <div>
+            {{ comment.user_comment }}
+            {{ comment.content }}
+            <a href="{% url 'comment_reply' comment.id %}">reply</a>
+        </div>
+    {% empty %}
+    <p>empty</p>
+    {% endfor %}
 </body>
 
 </html>
