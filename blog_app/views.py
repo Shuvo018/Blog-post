@@ -3,6 +3,7 @@ from typing import Any
 from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic import DetailView
 from .models import Author, Post, Comment
 from .forms import PostForm
 # Create your views here.
@@ -21,3 +22,8 @@ class PostCreateView(CreateView):
     form_class = PostForm
 
     success_url = '/'
+
+class PostDetailView(DetailView):
+    template_name = 'post_detail.html'
+    model = Post
+    context_object_name = 'post'

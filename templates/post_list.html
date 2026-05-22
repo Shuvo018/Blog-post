@@ -10,7 +10,7 @@
     {% for post in post_list %}
     <div>
         <h1>{{ post.title }}</h1>
-        <h4>{{ post.content }}</h4>
+        <a href="{% url 'post_detail' post.id %}">detail</a>
     </div>
     {% empty %}
     <h4>No posts found.</h4>
