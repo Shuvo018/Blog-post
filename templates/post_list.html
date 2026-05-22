@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+    <h1><a href="{% url 'post_create' %}">create post</a></h1>
     {% for post in post_list %}
     <div>
         <h1>{{ post.title }}</h1>
