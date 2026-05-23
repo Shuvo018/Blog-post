@@ -9,7 +9,7 @@ class TimeStampMixin(models.Model):
         abstract = True
 
 class Author(TimeStampMixin):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='author_user')
     first_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=True, null=True)
 

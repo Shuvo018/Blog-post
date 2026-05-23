@@ -108,28 +108,9 @@
                                     <i class="bi bi-reply"></i> Reply
                                 </a>
 
-                                <!-- Replies -->
                                 {% if comment.child_comment.all %}
                                 <div class="reply-section">
-                                    {% for reply in comment.child_comment.all %}
-                                    <div class="reply-item">
-                                        <div class="comment-meta">
-                                            <span class="comment-author">
-                                                <i class="bi bi-person-circle"></i>
-                                                {{ reply.user_comment.username }}
-                                            </span>
-                                            <span class="comment-time">
-                                                {{ reply.created_at|timesince }} ago
-                                            </span>
-                                        </div>
-                                        <div class="comment-content">
-                                            {{ reply.content }}
-                                        </div>
-                                        <a href="{% url 'comment_reply' reply.id %}" class="btn-link btn-sm">
-                                            <i class="bi bi-reply"></i> Reply
-                                        </a>
-                                    </div>
-                                    {% endfor %}
+                                    {% include 'comment_reply_node.html' with comment=comment %}
                                 </div>
                                 {% endif %}
                             </div>

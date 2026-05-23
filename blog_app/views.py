@@ -1,5 +1,7 @@
 from typing import Any
 
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView
@@ -25,8 +27,18 @@ class PostList(ListView):
 class PostCreateView(CreateView):
     template_name = 'post_create.html'
     form_class = PostForm
-
     success_url = '/'
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        user = self.request.user
+        author, _ = Author.objects.get_or_create(
+            user=user,
+            defaults={
+                'first_name': user.username or '',
+                'last_name': user.username or '',
+            }
+        )
+        form.instance.author = author
+        return super().form_valid(form)
 
 class PostDetailView(DetailView):
     template_name = 'post_detail.html'
