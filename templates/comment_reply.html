@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1>Reply to comment</h1>
+    </header>
+    <main>
+        <a href="{% url 'post_detail' parent_comment.post_comment.pk %}"> back to post </a>
+        <div class="parent-comment">
+            <p>{{ parent_comment.user_comment.username }}</p>
+            <p>{{ parent_comment.content }}</p>
+        </div>
+
+        <div class="reply-box">
+            <h1>Write you reply</h1>
+            <form action="" method="post">
+                {% csrf_token %}
+                <textarea name="content" id="" ></textarea>
+                <button type="submit">comment reply</button>
+            </form>
+        </div>
+
+    </main>
+</body>
+</html>

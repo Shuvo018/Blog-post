@@ -28,7 +28,7 @@ class Comment(TimeStampMixin):
     user_comment = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='user_comments')
     post_comment = models.ForeignKey(to=Post, on_delete=models.CASCADE, related_name='post_comments')
     content = models.TextField()
-    parent = models.ForeignKey('self', on_delete=models.CASCADE,blank=True, null=True)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE,blank=True, null=True, related_name='child_comment')
 
     def __str__(self) -> str:
         return self.content
