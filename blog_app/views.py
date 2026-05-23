@@ -6,6 +6,11 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import DetailView
 from .models import Author, Post, Comment
 from .forms import PostForm, CommentForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+
+
 # Create your views here.
 
 class PostList(ListView):
@@ -66,3 +71,9 @@ def addReply(request, comment_id):
         )
         return redirect('post_detail', pk=parent_comment.post_comment.pk)
     return render(request=request, template_name='comment_reply.html', context={'form': form, 'parent_comment': parent_comment})
+
+class UserRegistrationView(CreateView):
+    form_class = UserCreationForm
+    model = User
+    template_name = 'registration/user_registration.html'
+    success_url = '/login/'
