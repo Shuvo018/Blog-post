@@ -1,30 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <header>
-        <h1>Reply to comment</h1>
-    </header>
-    <main>
-        <a href="{% url 'post_detail' parent_comment.post_comment.pk %}"> back to post </a>
-        <div class="parent-comment">
-            <p>{{ parent_comment.user_comment.username }}</p>
-            <p>{{ parent_comment.content }}</p>
+{% extends 'base.html' %}
+
+{% block title %}Reply to Comment - Blog Hub{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <!-- Back Button -->
+        <a href="{% url 'post_detail' parent_comment.post_comment.pk %}" class="back-button btn-link">
+            <i class="bi bi-arrow-left"></i> Back to Post
+        </a>
+
+        <!-- Original Comment -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title text-white mb-0">
+                    <i class="bi bi-chat-left-quote"></i> Original Comment
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="comment-meta mb-3">
+                    <span class="comment-author">
+                        <i class="bi bi-person-circle"></i>
+                        {{ parent_comment.user_comment.username }}
+                    </span>
+                    <span class="comment-time">
+                        {{ parent_comment.created_at|timesince }} ago
+                    </span>
+                </div>
+                <div class="comment-content" style="background: #f9fafb; padding: 1rem; border-radius: 8px; border-left: 3px solid var(--primary-color);">
+                    {{ parent_comment.content }}
+                </div>
+            </div>
         </div>
 
-        <div class="reply-box">
-            <h1>Write you reply</h1>
-            <form action="" method="post">
-                {% csrf_token %}
-                <textarea name="content" id="" ></textarea>
-                <button type="submit">comment reply</button>
-            </form>
+        <!-- Reply Form -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title text-white mb-0">
+                    <i class="bi bi-reply"></i> Write Your Reply
+                </h5>
+            </div>
+            <div class="card-body">
+                <form action="" method="post" novalidate>
+                    {% csrf_token %}
+
+                    <div class="mb-4">
+                        <label for="replyContent" class="form-label fw-600 mb-2">
+                            Your Response
+                        </label>
+                        <textarea
+                            class="form-control"
+                            id="replyContent"
+                            name="content"
+                            rows="6"
+                            placeholder="Share your thoughts in response to this comment..."
+                            required
+                        ></textarea>
+                        <small class="text-muted-custom d-block mt-2">
+                            <i class="bi bi-info-circle"></i>
+                            Keep your reply respectful and constructive
+                        </small>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <!-- Form Actions -->
+                    <div class="d-flex gap-3 justify-content-between">
+                        <a href="{% url 'post_detail' parent_comment.post_comment.pk %}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send-fill"></i> Post Reply
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
 
-    </main>
-</body>
-</html>
+        <!-- Tips -->
+        <div class="alert alert-info mt-4 border-0" role="alert">
+            <i class="bi bi-info-circle"></i>
+            <strong class="ms-2">Tip:</strong> Make sure your reply is constructive and adds value to the conversation!
+        </div>
+    </div>
+</div>
+{% endblock %}
